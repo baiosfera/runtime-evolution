@@ -1,0 +1,21 @@
+zerops:
+  - setup: evolution
+    build:
+      base: alpine/go@1.22
+      buildCommands:
+        - echo "EvolutionGo binary/source build"
+      deployFiles:
+        - .
+    run:
+      base: alpine/go@1.22
+      ports:
+        - port: 8085
+          httpSupport: true
+      envVariables:
+        PORT: "8085"
+        DATABASE_URL: "postgresql://${database_user}:${database_password}@${database_hostname}:${database_port}/${database_dbName}"
+      start: ./evolution
+      healthCheck:
+        httpGet:
+          port: 8085
+          path: /health
