@@ -1,0 +1,13 @@
+.env
+logs/*
+build/
+evolution
+evolution-go
+.go-mod-cache/
+.go-build-cache/
+*.prof
+coverage.*
+.air.toml
+.idea/
+.vscode/
+.DS_Store
