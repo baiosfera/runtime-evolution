@@ -62,6 +62,9 @@ func (r *Routes) AssignRoutes(eng *gin.Engine) {
 	eng.GET("/favicon.ico", func(c *gin.Context) {
 		c.Status(http.StatusNoContent)
 	})
+	eng.GET("/vite.svg", func(c *gin.Context) {
+		c.Status(http.StatusNoContent)
+	})
 
 	// Rotas para o gerenciador React (sem autenticação)
 	eng.Static("/assets", "./manager/dist/assets")
