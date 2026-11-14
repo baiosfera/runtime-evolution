@@ -392,15 +392,24 @@ func Load() *Config {
 
 	minioEnabled := os.Getenv(config_env.MINIO_ENABLED) == "true"
 	if minioEnabled {
-		config.MinioEnabled = true
-		loadMinioConfig(config)
+		rawEndpoint := strings.TrimSpace(os.Getenv(config_env.MINIO_ENDPOINT))
+		rawAccess := strings.TrimSpace(os.Getenv(config_env.MINIO_ACCESS_KEY))
+		if rawEndpoint == "" || strings.Contains(rawEndpoint, "${") || rawAccess == "" || strings.Contains(rawAccess, "${") {
+			fmt.Println("Warning: MINIO_ENABLED=true but MINIO_ENDPOINT/ACCESS_KEY unresolved; disabling MinIO media storage.")
+		} else {
+			config.MinioEnabled = true
+			loadMinioConfig(config)
+		}
 	}
 
 	return config
 }
 
 func loadMinioConfig(config *Config) {
-	minioEndpoint := os.Getenv(config_env.MINIO_ENDPOINT)
+	minioEndpoint := strings.TrimSpace(os.Getenv(config_env.MINIO_ENDPOINT))
+	minioEndpoint = strings.TrimPrefix(minioEndpoint, "https://")
+	minioEndpoint = strings.TrimPrefix(minioEndpoint, "http://")
+	minioEndpoint = strings.TrimSuffix(minioEndpoint, "/")
 	panicIfEmpty(config_env.MINIO_ENDPOINT, minioEndpoint)
 
 	minioAccessKey := os.Getenv(config_env.MINIO_ACCESS_KEY)

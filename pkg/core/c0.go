@@ -481,6 +481,8 @@ func InitializeRuntime(_48, _gjx6, _acq string) *RuntimeContext {
 			rc._oc.Store(true)
 			ActivateIntegrity(rc)
 			fmt.Printf("  ✓ GLOBAL_API_KEY accepted — license saved and activated\n")
+		} else if _1xj(rc, _gjx6) {
+			fmt.Println("  ✓ License activated automatically via EVOLUTION_OPERATOR_EMAIL (fallback from GLOBAL_API_KEY)")
 		} else {
 			rc._58hw = ""
 			_ohr5()
