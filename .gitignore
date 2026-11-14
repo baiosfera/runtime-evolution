@@ -1,8 +1,8 @@
 .env
 logs/*
 build/
-evolution
-evolution-go
+/evolution
+/evolution-go
 .go-mod-cache/
 .go-build-cache/
 *.prof
