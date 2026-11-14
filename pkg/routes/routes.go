@@ -71,6 +71,10 @@ func (r *Routes) AssignRoutes(eng *gin.Engine) {
 		c.File("manager/dist/index.html")
 	})
 
+	eng.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusFound, "/manager")
+	})
+
 	eng.GET("/manager", func(c *gin.Context) {
 		c.File("manager/dist/index.html")
 	})

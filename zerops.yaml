@@ -12,6 +12,7 @@ zerops:
         - export GOROOT="/usr/local/go-1.26" && export PATH="/usr/local/go-1.26/bin:$PATH" && go version && CGO_ENABLED=1 go build -ldflags "-X main.version=$(cat VERSION)" -o evolution ./cmd/evolution-go
       deployFiles:
         - evolution
+        - start.sh
         - manager
         - VERSION
         - db_init.sql
@@ -27,7 +28,7 @@ zerops:
     run:
       base: ubuntu/go@1.22
       prepareCommands:
-        - sudo apt-get update && sudo apt-get install -y --no-install-recommends tzdata ffmpeg poppler-utils postgresql-client
+        - sudo apt-get update && sudo apt-get install -y --no-install-recommends curl tzdata ffmpeg poppler-utils postgresql-client
       ports:
         - port: 8085
           httpSupport: true
@@ -54,6 +55,7 @@ zerops:
         POSTGRES_PASSWORD: ${database_password}
         POSTGRES_DB: "evogo_auth"
         GLOBAL_API_KEY: ${EVOLUTION_API_KEY}
+        EVOLUTION_INSTANCE: ${PROJECT_NAME}
         NATS_URL: ${nats_connectionString}
         NATS_GLOBAL_ENABLED: "true"
         NATS_GLOBAL_EVENTS: "ALL"
@@ -62,7 +64,7 @@ zerops:
         CONNECT_ON_STARTUP: "true"
         OS_NAME: "Evolution GO"
         TZ: "UTC"
-      start: ./evolution
+      start: bash start.sh
       healthCheck:
         httpGet:
           port: 8085
