@@ -11,12 +11,7 @@ zerops:
       buildCommands:
         - export GOROOT="/usr/local/go-1.26" && export PATH="/usr/local/go-1.26/bin:$PATH" && go version && CGO_ENABLED=1 go build -ldflags "-X main.version=$(cat VERSION)" -o evolution ./cmd/evolution-go
       deployFiles:
-        - evolution
-        - start.sh
-        - manager
-        - VERSION
-        - db_init.sql
-        - public
+        - .
       cache:
         - .go-mod-cache
         - .go-build-cache
