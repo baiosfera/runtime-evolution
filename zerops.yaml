@@ -9,7 +9,7 @@ zerops:
         - sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential git curl ca-certificates libjpeg-turbo8-dev libwebp-dev
         - curl -fsSL https://go.dev/dl/go1.26.0.linux-amd64.tar.gz -o /tmp/go1.26.0.tgz && sudo rm -rf /usr/local/go-1.26 && sudo mkdir -p /usr/local/go-1.26 && sudo tar -C /usr/local/go-1.26 --strip-components=1 -xzf /tmp/go1.26.0.tgz && rm -f /tmp/go1.26.0.tgz
       buildCommands:
-        - export PATH="/usr/local/go-1.26/bin:$PATH" && CGO_ENABLED=1 go build -ldflags "-X main.version=$(cat VERSION)" -o evolution ./cmd/evolution-go
+        - export GOROOT="/usr/local/go-1.26" && export PATH="/usr/local/go-1.26/bin:$PATH" && go version && CGO_ENABLED=1 go build -ldflags "-X main.version=$(cat VERSION)" -o evolution ./cmd/evolution-go
       deployFiles:
         - evolution
         - manager
